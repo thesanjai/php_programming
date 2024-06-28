@@ -15,6 +15,13 @@
        // echo "$i\n";
        printf("%d <hr> ",$i);
     }
+
+    $a="sanjai";
+
+    print("$a");
+
+    $a=123;
+    print("$a");
     ?>
     
 </body>
