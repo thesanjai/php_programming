@@ -166,7 +166,7 @@ TO LOAD THE CSS PAGE DYNAMICALLY BY THE SERVER
 
 PHP_SELF => It is the variable it has the location file name which was executing current
 
-basefunction , it is an built-in function used to extracr the filename from the given path
+basefunction , it is an built-in function used to extract the filename from the given path
 Example: S:/csbs/test.txt
 	basename(S:/csbs/test.txt)         //output => test.txt
 we want only the name of the file so, give the .txt as the second parameter to the basename
@@ -182,3 +182,31 @@ it helps to load the file only it was present
 
 isset($_POST['username']);
 isset is the inbuilt function used to excecute the code only it was set,which means only it is present
+
+$index = array_search(needle,sea);
+array_search is the inbuilt function used to find the index of the needle in the sea
+if the needle is not found in the sea, it will return false
+
+array_key_search(needle,sea);
+used to find the keys is present or not
+
+gettype()
+gettype is the inbuilt function used to get the type of the variable
+
+count()
+count is the inbuilt function used to get the size of the array
+
+//Integer and Strings are only be the keys of the assosicative array
+array_flip() //used to flip the key and values
+
+
+callback //means we need to pass the function there
+
+array_chunk($array,no);
+split the 1D array into 2D array , keys are removed
+//to preserve keys add another parameter "true"
+array_chunk($array,no,true);
+
+array_pad($array,size,WhatToFill);//WhatToFill=>anything,int,string,array,object....
+size=+ve right side
+size=-ve left side 
