@@ -1,0 +1,184 @@
+////////////////////////////PHOTOGRAM PROJECT STARTED////////////////////////////////////////////
+/*
+//To display Error msg in php
+	<?php
+
+    error_reporting(E_ALL);
+    ini_set('display_errors','1');
+
+
+
+//To see the error messages in PHP
+tail -f /var/log/apache2/error.log 
+*/
+
+phpinfo() // shows all the information about the php
+
+include 'libs/load.php' // common header file for loading our own functions, it is user defined one
+//include this function file in your master.php
+
+/*
+	creating the function to load the templates 
+
+	include_once "$name".php & require_once "$name".php // both are inbuilt functions used for same purposed, i.e) loading the templates
+	
+	include_once() => if the template already present it will not include it
+
+	__<something>__ //magic variable
+	
+	while including the file use, __DIR__ // which represent the current location of the directory from the home directory
+	__DIR__ // works in both cli and Apache
+	in html and css if you use '/' for locating the file it represents the htdocs(working space), but php runs in the backend server ,so we should use __DIR__
+	but the above mention method, __DIR__ is a not consistent method
+	
+	then wich is consistent??
+
+	
+	*MAGIC CONSTANTS*
+	__FILE__ // give the location of the currently executing file
+	__LINE__
+	__FUNCTION__
+	__CLASS__
+	__DATE__
+	__TIME__
+	__TRAIT__
+	__METHOD__
+	__NAMESPACE__
+
+	*PHP SUPER GLOBALS*
+	$GLOBALS
+	$_SERVER
+	$_REQUEST
+	$_POST
+	$_GET
+	$_FILES
+	$_ENV
+	$_COOKIE
+	$_SESSION 
+
+*/
+
+function load_template($name){
+	include __DIR__."<location>".php; // used in local server & it is inconsistent // . for concatenation
+}
+
+
+/*
+	print_r(); //inbuilt function used to print the array , in a single line
+	
+	print_r($_SERVER); // prints the info about the browser's http request
+
+	//TO CHECK THE ABOVE THE STAMENT WE CAN USE TELNET
+	http  runs in port = 80
+	https runs in port = 443
+	
+	1. copy the http request from the browser
+	2. open and connect the telnet
+		in cli
+		telent localhost 80 or telent ip_address 80
+	3. paste the copied content (http request)	
+		press enter 2 times
+		/*
+			output
+		1.response to the request
+		2.something not readable format // can able to convert it in the readable format , for that you should remove the Accept-encoding in the request
+			connection close by foreign host
+	
+	play:
+	try the request with GET and then try with POST
+	GET & POST => are the popular HTTP request methods
+
+	TYPES OF HTTP METHODS
+		GET
+		POST
+		PATCH
+		DELETE
+		PUT 
+
+	DOCUMENT ROOT OF ALL THE SERVER/COMPUTERS => /var/www/html
+	we link this location with htdocs, for accesing 
+
+*/
+
+// How to call the function effectively & consistent manner
+
+	function load_template($name){
+		include $_SERVER['DOCUMENT_ROOT']."<location>".php; //used in every server & it is consistent in nature
+		//we can use include_once also
+		//Example : "/<app_name>/<foder_name>/$name.php"
+	}
+
+/*
+	$_SERVER is the super global , which makes the link b/w php & apache
+
+	To learn more about , URL and http(s) methods, working principle , install post man app and do a experiment with that.
+
+	in URL, we see ?id=2&cid=234
+	these are things of information going by means of array of _GET
+
+	so, _GET is not recommended to sending username and userpassword
+	then, what is the another method to sending them?
+		if i use _POST , i can send the contents of info in the both way , url and _post has separate space for it called body, so developer can choose by which 		was he wants to send their data's.
+
+		to send the data to the _POST,
+		we use, form-data or form-encoded-data(not able send files)
+
+		_GET => only URL
+		_POST => both URL & body
+
+		_COOKIE => isolated storage , to store the info , it will sent to server , what irrespective of the HTTP(s) method.
+		it is persistent storage, we can able to expiry time of the cookie
+		_COOKIE are not sharable among websites, these was done by, browser
+		where to see the cookies in browser?
+			in inspect element, goto storage , goto to cookies => here we can see n number of cookies
+		
+		cookies are session related things,
+		cookie hijacking is done by XSS => Cross Site Scripting
+
+		if you open any wesbite, it will ask permission for store cookies,
+		why , cookies are store inside our own computer thats why they ask permission
+		
+		remember me option in browser is posible because of cookies.
+
+		Oauth => open authentication
+			login into website by other website's info
+		Socialauth => Social authentication
+			login into the website via the browser, you are already logged in
+*/
+
+
+///////////LOGIN PAGE////////////////////////////////////////
+
+$_GET is used to fetch the data
+$_POST is used to send the data securely through body
+
+GET is for fetching data, appending parameters in the URL, ideal for searches.
+POST, used for updates, sends data securely in the request body, perfect for forms
+
+form action="<webpage>" method="get/post"
+
+if you use get & post , we should use "name" in input , otherwise the content you typed in form will not send to action page
+this is the name which is array index in PHP
+
+
+/////////////////////////////////////////////SIGN UP PAGE////////////////////////////////////////////////////////
+TO LOAD THE CSS PAGE DYNAMICALLY BY THE SERVER
+
+PHP_SELF => It is the variable it has the location file name which was executing current
+
+basefunction , it is an built-in function used to extracr the filename from the given path
+Example: S:/csbs/test.txt
+	basename(S:/csbs/test.txt)         //output => test.txt
+we want only the name of the file so, give the .txt as the second parameter to the basename
+	basename(S:/csbs/test.txt,".txt")    //output =>test
+
+<link href="/app/css/<?=basename($_SERVER['PHP_SELF'],'.php')?>.css"
+
+file_exists , built-in function used to check whether the file is exist or not, for this we should provide a location of file
+it helps to load the file only it was present
+
+<?if(file_exists($_SERVER['DOCUMENT_ROOT'].'/app/css'/.basename($_SERVER['PHP_SELF'],".php").".css")?>
+
+
+isset($_POST['username']);
+isset is the inbuilt function used to excecute the code only it was set,which means only it is present
